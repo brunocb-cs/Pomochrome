@@ -17,7 +17,7 @@ let intervaloId = null;
 const iniciarOuPausarBt = document.querySelector('#start-pause span');
 
 const somPlay = new Audio('sons/click.wav');
-const somPause = new Audio('sons/pause.mp3');
+const somPause = new Audio('sons/click.wav');
 const somBeep = new Audio('sons/beep.wav');
 
 const icon = document.querySelector('.app__card-primary-butto-icon');
@@ -109,8 +109,14 @@ const contagemRegressiva = () => {
     //Se o tempo for menor ou igual a 0
     if (tempoDecorridoEmsegundos <= 0){
         somBeep.play();//O som de beep é tocado
+        const focoAtivo = html.getAttribute('data-contexto') == 'foco';
+
+        //Se o contexto focoAtivo for true
+        if (focoAtivo){
+            const evento = new CustomEvent('FocoFinalizado');//Cria um novo evento "FocoFinalizado"
+            document.dispatchEvent(evento);//Dispara o novo evento criado
+        }
         zerar();//A função zerar é ativada
-        alert('O tempo acabou!');//Um alerta é criado
         return;
     }
 
